@@ -1,0 +1,16 @@
+@import url(semantic.min.css);
+
+body{
+  background-color: #d2e0d9;
+  padding: 2%;
+}
+
+p{
+  color: #56c886;
+}
+
+a{
+  color: #187109;
+  text-decoration: none;
+  font-weight: bold;
+}
