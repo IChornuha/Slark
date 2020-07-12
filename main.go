@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"slark/src/config"
+	"slark/src/forum"
+	"strconv"
 
-	"github.com/IChornuha/slark/src/books"
+	"github.com/IChornuha/Slark/src/books"
 )
 
 func main() {
@@ -27,5 +30,29 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	})
+
+	http.HandleFunc("/search", func(w http.ResponseWriter, request *http.Request) {
+
+		type Search struct {
+			TopicID int
+		}
+		search := Search{TopicID: 0}
+		topicID := request.FormValue("topicId")
+		if topicID != "" {
+			search.TopicID, _ = strconv.Atoi(topicID)
+		}
+		forum := forum.Forum{}
+		SlitherinForum := forum.Init()
+
+		SlitherinForum.Auth(config.App.Auth.Login, config.App.Auth.Password)
+		SlitherinForum.GetTopic(search.TopicID)
+		fmt.Println("Parsed topic: ", SlitherinForum.TopicTitle)
+
+		// book := books.Book{Title: SlitherinForum.TopicTitle}
+		// book.Prepare(SlitherinForum.GetParsedPosts())
+		// book.Write()
+		book := books.Book{}
+	})
+
 	fmt.Println(http.ListenAndServe(":8888", nil))
 }

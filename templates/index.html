@@ -7,16 +7,40 @@
 			<title>Slitherin Library</title>
 	</head>
 	<body>
-		<div class="ui horizontal statistics">
-			<div class="statistic">
-			  <div class="value">
-				{{len .List}}
-			  </div>
-			  <div class="label">
-				книг(и) есть библиотеке сейчас
-			  </div>
+		<div class="ui three column stackable center aligned grid">
+			<div class="middle aligned row">
+				<div class="column">
+					<div class="ui horizontal statistics">
+						<div class="statistic">
+							<div class="value">
+								{{len .List}}
+							</div>
+							<div class="label">
+								книг(и) есть библиотеке сейчас
+							</div>
+						</div>
+					</div>
 			</div>
-		<hr>
+
+			<div class="column">
+
+			</div>
+
+			<div class="column">
+					<form class="ui form" action="/search">
+						<div class="field">
+							<div class="ui fluid labeled input">
+								<div class="ui label">
+									http://slitherin.potterforum.ru/viewtopic.php?id=
+								</div>
+								<input type="text" name="topicId" placeholder="25657">
+								<button class="ui button">Искать</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
 		<div class="ui six cards">
 			{{range .List}}
 				<a class="ui card" href=/{{.File}}>
