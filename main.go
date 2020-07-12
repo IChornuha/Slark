@@ -1,10 +1,11 @@
 package main
 
 import (
-	"Slark/src/books"
 	"fmt"
 	"html/template"
 	"net/http"
+
+	"github.com/IChornuha/slark/src/books"
 )
 
 func main() {
