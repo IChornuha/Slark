@@ -4,17 +4,18 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"slark/src/config"
-	"slark/src/forum"
 	"strconv"
 
 	"github.com/IChornuha/Slark/src/books"
+	"github.com/IChornuha/Slark/src/config"
+	"github.com/IChornuha/Slark/src/files"
+	"github.com/IChornuha/Slark/src/forum"
 )
 
 func main() {
 
-	books := books.Books{}
-	books.Init()
+	booksList := files.Books{}
+	booksList.Init()
 	templates := template.Must(template.ParseFiles("templates/index.html"))
 
 	http.Handle("/static/",
@@ -26,7 +27,7 @@ func main() {
 			http.FileServer(http.Dir("files"))))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, request *http.Request) {
-		if err := templates.ExecuteTemplate(w, "index.html", books); err != nil {
+		if err := templates.ExecuteTemplate(w, "index.html", booksList); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	})
@@ -48,10 +49,9 @@ func main() {
 		SlitherinForum.GetTopic(search.TopicID)
 		fmt.Println("Parsed topic: ", SlitherinForum.TopicTitle)
 
-		// book := books.Book{Title: SlitherinForum.TopicTitle}
-		// book.Prepare(SlitherinForum.GetParsedPosts())
-		// book.Write()
-		book := books.Book{}
+		book := books.Book{Title: SlitherinForum.TopicTitle}
+		book.Prepare(SlitherinForum.GetParsedPosts())
+		book.Write()
 	})
 
 	fmt.Println(http.ListenAndServe(":8888", nil))
