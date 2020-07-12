@@ -47,9 +47,14 @@ func main() {
 
 		SlitherinForum.Auth(config.App.Auth.Login, config.App.Auth.Password)
 		SlitherinForum.GetTopic(search.TopicID)
-		fmt.Println("Parsed topic: ", SlitherinForum.TopicTitle)
 
-		book := books.Book{Title: SlitherinForum.TopicTitle}
+		book := books.Book{Title: SlitherinForum.TopicTitle,
+			Genre:   SlitherinForum.Genre,
+			Pairing: SlitherinForum.Pairing,
+			Size:    SlitherinForum.Size,
+			Status:  SlitherinForum.Status,
+			Rating:  SlitherinForum.Rating,
+		}
 		book.Prepare(SlitherinForum.GetParsedPosts())
 		book.Write()
 	})

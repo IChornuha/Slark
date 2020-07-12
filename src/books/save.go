@@ -15,6 +15,11 @@ const BookDirectoryPath = "./files"
 //Book structure represent forum topic as json-encoded data
 type Book struct {
 	Title    string
+	Genre    string
+	Pairing  string
+	Size     string
+	Status   string
+	Rating   string
 	Author   string
 	Source   string
 	Document *Document
